@@ -1,0 +1,13 @@
+<!DOCTYPE html><html>
+<head>
+    <title>All Students</title>
+</head><body><h1>All Students</h1>{% for student in students %}
+
+<hr><p><b>Name:</b> {{ student[1] }}</p><p><b>Email:</b> {{ student[2] }}</p><p><b>Branch:</b> {{ student[4] }}</p><p><b>CGPA:</b> {{ student[5] }}</p><a href="/student-details/{{ student[0] }}">
+    <button>
+        View Details
+    </button>
+</a>{% endfor %}
+
+</body>
+</html>

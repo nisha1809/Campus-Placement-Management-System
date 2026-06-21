@@ -1,14 +1,34 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html>
 <head>
     <title>Admin Dashboard</title>
-</head>
+</head><body><h1>Admin Dashboard</h1>
+    <hr>
 
-<body>
+<h2>Dashboard Statistics</h2>
 
-<h1>Admin Dashboard</h1>
+<p><b>Total Students:</b> {{ total_students }}</p>
 
-<p>Welcome Admin</p>
+<p><b>Total Companies:</b> {{ total_companies }}</p>
 
+<p><b>Total Placement Drives:</b> {{ total_drives }}</p>
+
+<p><b>Total Applications:</b> {{ total_applications }}</p>
+
+<hr>
+
+<h2>Welcome Admin</h2>
+
+<a href="/view-students">
+    <button>
+        View Students
+    </button>
+</a>
+
+<a href="/add-company"><button>Add Company</button></a>
+<a href="/view-companies"><button>View Companies</button></a>
+
+<a href="/add-drive"><button>Create Placement Drive</button></a>
+<a href="/view-drives"><button>View Placement Drives</button></a>
+<a href="/view-applications"><button>View Applications</button></a>
 </body>
 </html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Placement Drives</title>
+</head>
+
+<body>
+
+<h1>Available Placement Drives</h1>
+
+{% for drive in drives %}
+
+<hr>
+
+<p><b>Drive Name:</b> {{ drive[2] }}</p>
+
+<p><b>Role:</b> {{ drive[3] }}</p>
+
+<p><b>Package:</b> {{ drive[4] }} LPA</p>
+
+<p><b>Minimum CGPA:</b> {{ drive[5] }}</p>
+
+<p><b>Deadline:</b> {{ drive[6] }}</p>
+
+<a href="/apply/{{ drive[0] }}">
+    <button>
+        Apply
+    </button>
+</a>
+
+{% endfor %}
+
+</body>
+</html>

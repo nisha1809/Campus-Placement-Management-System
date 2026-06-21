@@ -1,0 +1,12 @@
+<!DOCTYPE html><html>
+<head>
+    <title>View Companies</title>
+</head><body><h1>All Companies</h1>{% for company in companies %}
+
+<hr><p><b>Company ID:</b> {{ company[0] }}</p>
+<p><b>Company Name:</b> {{ company[1] }}</p>
+<p><b>Role:</b> {{ company[2] }}</p>
+<p><b>Package:</b> {{ company[3] }}</p><p><b>Eligibility CGPA:</b> {{ company[4] }}</p><p><b>Location:</b> {{ company[5] }}</p><p><b>Description:</b> {{ company[6] }}</p><p><b>Website:</b> {{ company[7] }}</p><p><b>Contact Person:</b> {{ company[8] }}</p><p><b>Contact Email:</b> {{ company[9] }}</p><p><b>Eligibility Branch:</b> {{ company[10] }}</p><p><b>Drive Mode:</b> {{ company[11] }}</p>{% endfor %}
+
+</body>
+</html>

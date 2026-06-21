@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Applications</title>
+</head>
+
+<body>
+
+    <h1>My Applications</h1>
+
+    {% if applications %}
+
+        {% for application in applications %}
+
+            <hr>
+            <p><b>Debug:</b>{{application }} </p>
+
+            <p><b>Drive Name:</b> {{ application[0] }}</p>
+
+            <p><b>Role:</b> {{ application[1] }}</p>
+
+            <p><b>Package:</b> {{ application[2] }} LPA</p>
+
+            <p><b>Status:</b> {{ application[3] }}</p>
+
+            <p><b>Applied On:</b> {{ application[4] }}</p>
+
+            <p><b>Reason / Remarks:</b> {{ application[5] }}</p>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>No applications found.</p>
+
+    {% endif %}
+
+</body>
+</html>

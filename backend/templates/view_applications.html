@@ -1,0 +1,12 @@
+<!DOCTYPE html><html>
+<head>
+    <title>View Applications</title>
+</head><body><h1>All Applications</h1>{% for application in applications %}
+
+<hr><p><b>Student Name:</b> {{ application[0] }}</p>
+<p><b>Drive Name:</b> {{ application[1] }}</p>
+<p><b>Status:</b> {{ application[2] }}</p>
+<p><b>Application Date:</b> {{ application[3] }}</p><p><b>Remarks:</b> {{ application[4] }}</p>{% endfor %}
+
+</body>
+</html>
