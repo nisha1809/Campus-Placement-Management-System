@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Shortlisted Students</title>
+</head>
+
+<body>
+
+<h1>Shortlisted Students</h1>
+
+<table border="1" cellpadding="10">
+
+<tr>
+    <th>Student Name</th>
+    <th>Branch</th>
+    <th>CGPA</th>
+    <th>Drive Name</th>
+    <th>Application Date</th>
+</tr>
+
+{% for student in shortlisted %}
+
+<tr>
+
+    <td>{{ student[0] }}</td>
+
+    <td>{{ student[1] }}</td>
+
+    <td>{{ student[2] }}</td>
+
+    <td>{{ student[3] }}</td>
+
+    <td>{{ student[4] }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+
+</html>

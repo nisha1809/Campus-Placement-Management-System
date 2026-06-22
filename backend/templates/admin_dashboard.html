@@ -14,6 +14,17 @@
 
 <p><b>Total Applications:</b> {{ total_applications }}</p>
 
+<p><b>Placed Students:</b> {{ placed_students }}</p>
+
+<p><b>Shortlisted Students:</b> {{ shortlisted_students }}</p>
+
+<p><b>Rejected Students:</b> {{ rejected_students }}</p>
+
+<p>
+    <b>Placement Percentage:</b>
+    {{ placement_percentage }} %
+</p>
+
 <hr>
 
 <h2>Welcome Admin</h2>
@@ -30,5 +41,20 @@
 <a href="/add-drive"><button>Create Placement Drive</button></a>
 <a href="/view-drives"><button>View Placement Drives</button></a>
 <a href="/view-applications"><button>View Applications</button></a>
+<a href="/shortlisted-students">
+    <button>
+        View Shortlisted Students
+    </button>
+</a>
+
+<a href="/selected-students">
+    <button>
+        View Selected Students
+    </button>
+</a>
+
+<a href="/admin-logout">
+    <button>Logout</button>
+</a>
 </body>
 </html>

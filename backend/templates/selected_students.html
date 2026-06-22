@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Selected Students</title>
+</head>
+
+<body>
+
+<h1>Selected Students</h1>
+
+<table border="1" cellpadding="10">
+
+<tr>
+    <th>Name</th>
+    <th>Branch</th>
+    <th>CGPA</th>
+    <th>Drive Name</th>
+    <th>Role</th>
+    <th>Package</th>
+</tr>
+
+{% for student in selected_students %}
+
+<tr>
+
+<td>{{ student[0] }}</td>
+<td>{{ student[1] }}</td>
+<td>{{ student[2] }}</td>
+<td>{{ student[3] }}</td>
+<td>{{ student[4] }}</td>
+<td>{{ student[5] }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>
