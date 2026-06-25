@@ -9,7 +9,7 @@
     <th>Status</th>
     <th>Applied Date</th>
     <th>Remarks</th>
-    <th>Actions</th>
+    
 </tr>{% for application in applications %}
 
 <tr><td>{{ application[7] }}</td>
@@ -31,36 +31,9 @@
 
 
 
-<td>
 
-{% if application[4] == "Selected" %}
 
-    <button disabled>Already Selected</button>
 
-{% elif application[6] == "Branch Not Eligible"
-      or application[6] == "CGPA below eligibility criteria" %}
-
-    <button disabled>Approve</button>
-    <button disabled>Reject</button>
-    <button disabled>Select</button>
-
-{% else %}
-
-    <a href="/approve/{{ application[7] }}">
-        <button>Approve</button>
-    </a>
-
-    <a href="/reject/{{ application[7] }}">
-        <button>Reject</button>
-    </a>
-
-    <a href="/select/{{ application[7] }}">
-        <button>Select</button>
-    </a>
-
-{% endif %}
-
-</td>
 
 </tr>{% endfor %}
 

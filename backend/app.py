@@ -144,11 +144,11 @@ def admin_dashboard():
     """
     SELECT COUNT(*)
     FROM application
-    WHERE status='Shortlisted'
+    WHERE status='Eligible'
     """
 )
 
-    shortlisted_students = cursor.fetchone()[0]
+    eligible_students = cursor.fetchone()[0]
     
     cursor.execute(
     """
@@ -191,7 +191,7 @@ def admin_dashboard():
     total_applications=total_applications,
 
     placed_students=placed_students,
-    shortlisted_students=shortlisted_students,
+    eligible_students=eligible_students,
     rejected_students=rejected_students,
 
     placement_percentage=placement_percentage
@@ -530,7 +530,7 @@ def apply(drive_id):
 
     else:
 
-        status = "Shortlisted"
+        status = "Eligible"
         remarks = "Eligible based on Branch and CGPA"
 
     # Insert application
@@ -678,49 +678,9 @@ def view_applications():
         applications=applications
     )
     
-@app.route('/shortlisted-students')
-def shortlisted_students():
 
-    conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="18092005",
-        database="placement_management"
-    )
-
-    cursor = conn.cursor()
-
-    cursor.execute(
-        """
-        SELECT
-            student.name,
-            student.branch,
-            student.cgpa,
-            placement_drive.drive_name,
-            application.application_date
-
-        FROM application
-
-        JOIN student
-        ON application.student_id = student.student_id
-
-        JOIN placement_drive
-        ON application.drive_id = placement_drive.drive_id
-
-        WHERE application.status = 'Shortlisted'
-        """
-    )
-
-    shortlisted = cursor.fetchall()
-
-    conn.close()
-
-    return render_template(
-        "shortlisted_students.html",
-        shortlisted=shortlisted
-    )
     
-@app.route('/approve/<int:application_id>')
+'''@app.route('/approve/<int:application_id>')
 def approve(application_id):
 
     conn = mysql.connector.connect(
@@ -765,9 +725,11 @@ def approve(application_id):
     conn.close()
 
     return "Application Approved Successfully"
+    
+    '''
 
 
-@app.route('/reject/<int:application_id>')
+'''@app.route('/reject/<int:application_id>')
 def reject(application_id):
 
     conn = mysql.connector.connect(
@@ -812,9 +774,11 @@ def reject(application_id):
     conn.close()
 
     return "Application Rejected Successfully"
+    
+    '''
 
 
-@app.route('/select/<int:application_id>')
+'''@app.route('/select/<int:application_id>')
 def select_student(application_id):
 
     conn = mysql.connector.connect(
@@ -861,6 +825,9 @@ def select_student(application_id):
 
     return "Student Selected Successfully"
 
+
+
+'''
 @app.route('/my-applications')
 def my_applications():
 
@@ -1030,5 +997,370 @@ def selected_students():
         "selected_students.html",
         selected_students=selected_students
     )
+    
+    
+@app.route('/delete-my-applications')
+def delete_my_applications():
+
+    student_id = session['student_id']
+
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="18092005",
+        database="placement_management"
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        DELETE FROM application
+        WHERE student_id=%s
+        """,
+        (student_id,)
+    )
+
+    conn.commit()
+
+    conn.close()
+@app.route('/delete-account')
+def delete_account():
+
+    student_id = session['student_id']
+
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="18092005",
+        database="placement_management"
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        DELETE FROM application
+        WHERE student_id=%s
+        """,
+        (student_id,)
+    )
+
+    cursor.execute(
+        """
+        DELETE FROM student
+        WHERE student_id=%s
+        """,
+        (student_id,)
+    )
+
+    conn.commit()
+
+    conn.close()
+
+    session.clear()
+
+    return redirect('/')
+
+    return "All Applications Deleted Successfully"
+
+
+
+
+@app.route('/aptitude-clear/<int:application_id>')
+def aptitude_clear(application_id):
+
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="18092005",
+        database="placement_management"
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        UPDATE application
+        SET status='Aptitude Cleared',
+            remarks='Cleared Aptitude Round'
+        WHERE application_id=%s
+        """,
+        (application_id,)
+    )
+
+    conn.commit()
+
+    conn.close()
+
+    return "Student Marked As Aptitude Cleared Successfully"
+
+
+@app.route('/eligible-students')
+def eligible_students():
+
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="18092005",
+        database="placement_management"
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT
+            student.name,
+            student.branch,
+            student.cgpa,
+            placement_drive.drive_name,
+            application.status,
+            application.application_id
+
+        FROM application
+
+        JOIN student
+        ON application.student_id = student.student_id
+
+        JOIN placement_drive
+        ON application.drive_id = placement_drive.drive_id
+
+        WHERE application.status='Eligible'
+        """
+    )
+
+    students = cursor.fetchall()
+    print("Eligible students fetched:", students)
+    
+
+    conn.close()
+
+    return render_template(
+        'eligible_students.html',
+        students=students
+    )
+    
+    
+    
+@app.route('/aptitude-cleared-students')
+def aptitude_cleared_students():
+
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="18092005",
+        database="placement_management"
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT
+            student.name,
+            student.branch,
+            student.cgpa,
+            placement_drive.drive_name,
+            application.status,
+            application.application_id
+
+        FROM application
+
+        JOIN student
+        ON application.student_id = student.student_id
+
+        JOIN placement_drive
+        ON application.drive_id = placement_drive.drive_id
+
+        WHERE application.status='Aptitude Cleared'
+        """
+    )
+
+    students = cursor.fetchall()
+
+    conn.close()
+
+    return render_template(
+        'aptitude_cleared_students.html',
+        students=students
+    )
+    
+@app.route('/technical-clear/<int:application_id>')
+def technical_clear(application_id):
+
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="18092005",
+        database="placement_management"
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        UPDATE application
+        SET status='Technical Cleared',
+            remarks='Cleared Technical Round'
+        WHERE application_id=%s
+        """,
+        (application_id,)
+    )
+
+    conn.commit()
+
+    conn.close()
+
+    return redirect('/aptitude-cleared-students')
+
+
+@app.route('/technical-cleared-students')
+def technical_cleared_students():
+
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="18092005",
+        database="placement_management"
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT
+            student.name,
+            student.branch,
+            student.cgpa,
+            placement_drive.drive_name,
+            application.status,
+            application.application_id
+
+        FROM application
+
+        JOIN student
+        ON application.student_id = student.student_id
+
+        JOIN placement_drive
+        ON application.drive_id = placement_drive.drive_id
+
+        WHERE application.status='Technical Cleared'
+        """
+    )
+
+    students = cursor.fetchall()
+
+    conn.close()
+
+    return render_template(
+        'technical_cleared_students.html',
+        students=students
+    )
+    
+@app.route('/hr-clear/<int:application_id>')
+def hr_clear(application_id):
+
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="18092005",
+        database="placement_management"
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        UPDATE application
+        SET status='HR Cleared',
+            remarks='Cleared HR Round'
+        WHERE application_id=%s
+        """,
+        (application_id,)
+    )
+
+    conn.commit()
+
+    conn.close()
+
+    return "Student Marked As HR Cleared Successfully"
+
+
+
+@app.route('/hr-cleared-students')
+def hr_cleared_students():
+
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="18092005",
+        database="placement_management"
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT
+            student.name,
+            student.branch,
+            student.cgpa,
+            placement_drive.drive_name,
+            application.status,
+            application.application_id
+
+        FROM application
+
+        JOIN student
+        ON application.student_id = student.student_id
+
+        JOIN placement_drive
+        ON application.drive_id = placement_drive.drive_id
+
+        WHERE application.status='HR Cleared'
+        """
+    )
+
+    students = cursor.fetchall()
+
+    conn.close()
+
+    return render_template(
+        'hr_cleared_students.html',
+        students=students
+    )
+    
+    
+    
+@app.route('/final-select/<int:application_id>')
+def final_select(application_id):
+
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="18092005",
+        database="placement_management"
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        UPDATE application
+        SET status='Selected',
+            remarks='Final Selection Completed'
+        WHERE application_id=%s
+        """,
+        (application_id,)
+    )
+
+    conn.commit()
+
+    conn.close()
+
+    return redirect('/selected-students')
 if __name__ == '__main__':
+    print("flask is starting...")
+    print("reached app.run")
     app.run(debug=True)
